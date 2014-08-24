@@ -44,29 +44,39 @@ public class ScaleImageView extends ImageView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        // take dimensions provided by parent for this view:
         int measuredWidth = MeasureSpec.getSize(widthMeasureSpec);
         int measuredHeight = MeasureSpec.getSize(heightMeasureSpec);
 
+        // subtract padding to get dimensions available for this view
         final int vwidth = measuredWidth - getPaddingLeft() - getPaddingRight();
         final int vheight = measuredHeight - getPaddingTop() - getPaddingBottom();
 
+        // get drawable size
         Drawable drawable = getDrawable();
-
         final int dwidth = drawable.getIntrinsicWidth();
         final int dheight = drawable.getIntrinsicHeight();
 
+        /*
+         * When view height is smaller than image height and view width
+         * is larger than image width calc target width, height and
+         * apply matrix transformation, otherwise just take view width
+         * and height.
+         */
         if (vheight < dheight && dwidth < vwidth) {
-            // set matrix transformation for landscape mode
-
+            // fill entire view width
             mWidthSize = vwidth;
+            // calculate target height to maintain aspect ratio
             mHeightSize = (dheight * vwidth) / dwidth;
 
             if (DEBUG) Log.v(TAG, String.format("onMeasure v w=%d h=%d d w=%d h=%d",
                     vwidth, vheight, dwidth, dheight));
 
+            // move image to have “fit bottom” effect
             int dy = vheight - mHeightSize;
             mMatrix.setTranslate(0, dy);
 
+            // apply matrix transformation
             setImageMatrix(mMatrix);
         } else {
             mWidthSize = vwidth;
