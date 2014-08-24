@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.snaprix.utils.LogUtils;
+import com.snaprix.views.ScaleImageView;
 
 
 /**
@@ -20,8 +22,12 @@ import android.view.ViewGroup;
 public class MainFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
+    private static final boolean DEBUG = LogUtils.DEBUG;
+
     public MainFragment() {
         // Required empty public constructor
+
+        ScaleImageView.setDebug(DEBUG);
     }
 
     @Override

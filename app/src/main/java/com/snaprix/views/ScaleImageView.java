@@ -61,7 +61,7 @@ public class ScaleImageView extends ImageView {
             mWidthSize = vwidth;
             mHeightSize = (dheight * vwidth) / dwidth;
 
-            if (DEBUG) Log.v(TAG, String.format("setFrame v w=%d h=%d d w=%d h=%d",
+            if (DEBUG) Log.v(TAG, String.format("onMeasure v w=%d h=%d d w=%d h=%d",
                     vwidth, vheight, dwidth, dheight));
 
             int dy = vheight - mHeightSize;
